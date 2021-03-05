@@ -4,7 +4,7 @@
     <div class="container q-pa-lg q-gutter-md">
       <q-table
         class="box-shadow"
-        :grid="$q.screen.xs"
+        :grid="mode=='grid'"
         title="库存管理"
         :data="allItem"
         :columns="columns"
@@ -12,12 +12,51 @@
         row-key="name"
         style="flex: 1;"
       >
-        <template v-slot:top-right>
+        <template v-slot:top-right="props">
           <q-input dense debounce="300" v-model="filter" placeholder="搜索">
             <template v-slot:append>
               <q-icon name="search"/>
             </template>
           </q-input>
+
+          <q-btn
+            flat
+            round
+            dense
+            class="q-mx-md"
+            :icon="props.inFullscreen ? 'fullscreen_exit' : 'fullscreen'"
+            @click="props.toggleFullscreen"
+            v-if="mode === 'list'"
+          >
+            <q-tooltip
+              :disable="$q.platform.is.mobile"
+              v-close-popup
+            >{{props.inFullscreen ? '退出' : '全屏'}}
+            </q-tooltip>
+          </q-btn>
+
+          <q-btn
+            flat
+            round
+            dense
+            class="q-mx-md"
+            :icon="mode === 'grid' ? 'list' : 'grid_on'"
+            @click="mode = mode === 'grid' ? 'list' : 'grid'; separator = mode === 'grid' ? 'none' : 'horizontal'"
+            v-if="!props.inFullscreen"
+          >
+            <q-tooltip
+              :disable="$q.platform.is.mobile"
+              v-close-popup
+            >{{mode==='grid' ? '列表' : '网格'}}
+            </q-tooltip>
+          </q-btn>
+          <q-btn
+            class="btn-table q-mx-md text-white"
+            icon-right="archive"
+            label="导出Excel"
+            no-caps
+            @click="exportTable"
+          />
         </template>
         <template v-slot:body="props">
           <q-tr :props="props">
@@ -38,7 +77,10 @@
 </template>
 
 <script>
+
 import BaseContent from '../../components/BaseContent/BaseContent'
+import { wrapCsvValue } from 'src/utils/exportCsv'
+import { exportFile } from 'quasar'
 
 export default {
   name: 'stockManage',
@@ -48,6 +90,7 @@ export default {
   data () {
     return {
       filter: '',
+      mode: 'list',
       columns: [
         {
           name: 'itemId',
@@ -149,6 +192,31 @@ export default {
       }).catch(error => {
         console.log(error)
       })
+    },
+    exportTable () {
+      // naive encoding to csv format
+      const content = [this.columns.map(col => wrapCsvValue(col.label))].concat(
+        this.allItem.map(row => this.columns.map(col => wrapCsvValue(
+          typeof col.field === 'function'
+            ? col.field(row)
+            : row[col.field === undefined ? col.name : col.field],
+          col.format
+        )).join(','))
+      ).join('\r\n')
+
+      const status = exportFile(
+        'stockManage.csv',
+        content,
+        'text/csv'
+      )
+
+      if (status !== true) {
+        this.$q.notify({
+          message: '浏览器拒绝文件下载',
+          color: 'negative',
+          icon: 'warning'
+        })
+      }
     }
   }
 }
