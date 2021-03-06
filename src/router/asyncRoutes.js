@@ -35,6 +35,17 @@ const asyncRoutesChildren = [
       keepAlive: true
     },
     component: () => import('pages/boxManage/boxManage')
+  },
+  {
+    path: '/recordManage',
+    name: 'recordManage',
+    meta: {
+      roles: ['admin', 'editor', 'test'],
+      title: '操作日志',
+      icon: 'home',
+      keepAlive: true
+    },
+    component: () => import('pages/recordManage/recordManage')
   }
 ]
 

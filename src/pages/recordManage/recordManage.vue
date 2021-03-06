@@ -5,8 +5,8 @@
       <q-table
         class="box-shadow"
         :grid="mode=='grid'"
-        title="库存管理"
-        :data="allItem"
+        title="操作日志"
+        :data="allRecord"
         :columns="columns"
         :filter="filter"
         row-key="name"
@@ -60,11 +60,12 @@
         </template>
         <template v-slot:body="props">
           <q-tr :props="props">
-            <q-td key="itemId" :props="props">{{ props.row.itemId }}</q-td>
-            <q-td key="itemName" :props="props">{{ props.row.itemName }}</q-td>
-            <q-td key="itemPrice" :props="props">{{ props.row.itemPrice }}</q-td>
-            <q-td key="salesVolumeAll" :props="props">{{ props.row.salesVolumeAll }}</q-td>
-            <q-td key="stockCurrentAll" :props="props">{{ props.row.stockCurrentAll }}</q-td>
+            <q-td key="operationRecordId" :props="props">{{ props.row.operationRecordId }}</q-td>
+            <q-td key="operationRecordAdminId" :props="props">{{ props.row.operationRecordAdminId }}</q-td>
+            <q-td key="operationRecordAdminName" :props="props">{{ props.row.operationRecordAdminName }}</q-td>
+            <q-td key="operationRecordSerial" :props="props">{{ props.row.operationRecordSerial }}</q-td>
+            <q-td key="operationRecordType" :props="props">{{ props.row.operationRecordType }}</q-td>
+            <q-td key="operationRecordTime" :props="props">{{ props.row.operationRecordTime }}</q-td>
             <q-td key="operating" :props="props">
               <q-btn class="btn-table text-white" icon="tune" label="详情" @click="handleTableClick(props.row)"/>
             </q-td>
@@ -83,7 +84,7 @@ import { wrapCsvValue } from 'src/utils/exportCsv'
 import { exportFile } from 'quasar'
 
 export default {
-  name: 'stockManage',
+  name: 'recordManage',
   components: {
     BaseContent
   },
@@ -93,105 +94,84 @@ export default {
       mode: 'list',
       columns: [
         {
-          name: 'itemId',
+          name: 'operationRecordId',
           align: 'left',
-          label: '商品Id',
-          field: 'itemId',
+          label: '日志Id',
+          field: 'operationRecordId',
           sortable: true
         },
         {
-          name: 'itemName',
-          required: true,
-          label: '商品名称',
+          name: 'operationRecordAdminId',
           align: 'center',
-          field: row => row.name,
+          label: '操作人Id',
+          field: 'operationRecordAdminId',
+          sortable: true
+        },
+        {
+          name: 'operationRecordAdminName',
+          required: true,
+          label: '操作人名称',
+          align: 'center',
+          field: row => row.operationRecordAdminName,
           format: val => `${val}`,
           sortable: true
         },
         {
-          name: 'itemPrice',
-          label: '商品价格',
-          field: 'itemPrice',
+          name: 'operationRecordSerial',
+          label: '操作编号',
+          align: 'center',
+          field: 'operationRecordSerial',
           sortable: true
         },
         {
-          name: 'salesVolumeAll',
-          label: '总销量',
-          field: 'salesVolumeAll',
+          name: 'operationRecordTime',
+          label: '操作时间',
+          field: 'operationRecordTime',
           sortable: true
         },
         {
-          name: 'stockCurrentAll',
-          label: '库存',
-          field: 'stockCurrentAll',
+          name: 'operationRecordType',
+          label: '动作',
+          field: 'operationRecordType',
           sortable: true
         },
         {
           name: 'operating',
-          label: 'operating',
+          label: '操作',
           align: 'center',
           field: 'operating',
           sortable: true
         }
       ],
-      allItem: []
+      allRecord: []
     }
   },
   created () {
-    this.getAllItem()
-    this.getHistoryDetail()
+    this.getAllRecord()
   },
   methods: {
     handleTableClick (e) {
       this.$router.push({
-        path: 'tableDetail',
+        path: 'boxDetail',
         query: {
-          id: e.name
+          id: e.shopId
         }
       })
     },
 
-    getAllItem () {
-      const query = {
-        url: '/admin/findAllItem',
-        responseType: 'text',
-        params: {}
-      }
-      this.$fetchData(query).then(res => {
-        this.allItem = res.data.AllItemInfo
-        console.log(this.allItem)
-      }).catch(error => {
-        console.log(error)
-      })
-    },
-
-    getHistory () {
+    getAllRecord () {
       const query = {
         url: '/opeartionRecord/getAllOpeartionRecord',
         responseType: 'text',
         params: {}
       }
       this.$fetchData(query).then(res => {
-        console.log(res.data)
+        this.allRecord = res.data.data.info
       }).catch(error => {
         console.log(error)
       })
     },
 
-    getHistoryDetail () {
-      const query = {
-        url: '/opeartionRecord/getOpeartionRecordDetail',
-        responseType: 'text',
-        params: {
-          operationRecordSerial: '6ea394c642de40639ef7e75c23cc25da'
-        }
-      }
-      this.$fetchData(query).then(res => {
-        console.log(res.data)
-      }).catch(error => {
-        console.log(error)
-      })
-    },
     exportTable () {
       // naive encoding to csv format
       const content = [this.columns.map(col => wrapCsvValue(col.label))].concat(
@@ -204,7 +184,7 @@ export default {
       ).join('\r\n')
 
       const status = exportFile(
-        'stockManage.csv',
+        'boxManage.csv',
         content,
         'text/csv'
       )
