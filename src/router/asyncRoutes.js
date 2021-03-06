@@ -24,6 +24,17 @@ const asyncRoutesChildren = [
       keepAlive: true
     },
     component: () => import('pages/stockManage/stockManage')
+  },
+  {
+    path: '/boxManage',
+    name: 'boxManage',
+    meta: {
+      roles: ['admin', 'editor', 'test'],
+      title: '盒子管理',
+      icon: 'home',
+      keepAlive: true
+    },
+    component: () => import('pages/boxManage/boxManage')
   }
 ]
 
