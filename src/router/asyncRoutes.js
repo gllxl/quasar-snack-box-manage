@@ -20,7 +20,7 @@ const asyncRoutesChildren = [
     meta: {
       roles: ['admin', 'editor', 'test'],
       title: '库存管理',
-      icon: 'home',
+      icon: 'dns',
       keepAlive: true
     },
     component: () => import('pages/stockManage/stockManage')
@@ -31,7 +31,7 @@ const asyncRoutesChildren = [
     meta: {
       roles: ['admin', 'editor', 'test'],
       title: '盒子管理',
-      icon: 'home',
+      icon: 'all_inbox',
       keepAlive: true
     },
     component: () => import('pages/boxManage/boxManage')
@@ -42,10 +42,21 @@ const asyncRoutesChildren = [
     meta: {
       roles: ['admin', 'editor', 'test'],
       title: '操作日志',
-      icon: 'home',
+      icon: 'list_alt',
       keepAlive: true
     },
     component: () => import('pages/recordManage/recordManage')
+  },
+  {
+    path: '/adminManage',
+    name: 'adminManage',
+    meta: {
+      roles: ['admin', 'editor', 'test'],
+      title: '管理员管理',
+      icon: 'supervised_user_circle',
+      keepAlive: true
+    },
+    component: () => import('pages/adminManage/adminManage')
   }
 ]
 
