@@ -37,6 +37,17 @@ const asyncRoutesChildren = [
     component: () => import('pages/boxManage/boxManage')
   },
   {
+    path: '/noticeManage',
+    name: 'noticeManage',
+    meta: {
+      roles: ['admin', 'editor', 'test'],
+      title: '公告管理',
+      icon: 'list_alt',
+      keepAlive: true
+    },
+    component: () => import('pages/noticeManage/noticeManage')
+  },
+  {
     path: '/recordManage',
     name: 'recordManage',
     meta: {

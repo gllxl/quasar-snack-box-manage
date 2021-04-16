@@ -1,6 +1,7 @@
 import Axios from 'axios'
 import Vue from 'vue'
 import { Notify } from 'quasar'
+import { dbConfig } from 'src/config'
 
 /**
  * axios initialization
@@ -16,9 +17,9 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 axios.defaults.headers.post['Accept-Encoding'] = 'Accept-Encoding: gzip, deflate'
 
 if (process.env.DEV) {
-  axios.defaults.baseURL = 'http://lsp.chinaqwe.top:10001/'
+  axios.defaults.baseURL = dbConfig.host
 } else if (process.env.PROD) {
-  axios.defaults.baseURL = 'http://lsp.chinaqwe.top:10001/'
+  axios.defaults.baseURL = 'http://localhost:10001/'
 }
 
 axios.interceptors.request.use(

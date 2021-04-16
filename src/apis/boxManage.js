@@ -1,5 +1,5 @@
-import qs from 'qs';
-import axios from '../boot/axios';
+import qs from 'qs'
+import axios from '../boot/axios'
 
 const shop = {
   /**
@@ -7,16 +7,16 @@ const shop = {
    * @return 1
    * @param access_token
    */
-  getBoxItems(access_token) {
+  getBoxItems (access_token) {
     return axios.post('/user/getItem', qs.stringify({
-      access_token,
-    }));
+      access_token
+    }))
   },
-  findItemInfoByShopId(access_token, shop_id) {
+  findItemInfoByShopId (access_token, shop_id) {
     return axios.post('/admin/findItemInfoByShopId', qs.stringify({
       access_token,
-      shop_id,
-    }));
-  },
-};
-export default shop;
+      shop_id
+    }))
+  }
+}
+export default shop
