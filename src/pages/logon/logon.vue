@@ -167,7 +167,7 @@ export default {
         }
       }
       this.$fetchData(query).then(res => {
-        sessionStorage.setItem('access_token', 972784674)
+        sessionStorage.setItem('access_token', 'asd')
         sessionStorage.setItem('user_role', 'admin')
         const lt = setTimeout(() => {
           this.$router.push('/').then(e => {

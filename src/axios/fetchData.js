@@ -9,10 +9,15 @@ import Vue from 'vue'
  */
 
 const fetchData = query => {
+  console.log(Vue.prototype)
+  console.log(Vue.prototype.$store)
   return _axios({
     url: query.url,
     method: query.method || 'POST',
-    params: query.params, // 请求参数
+    params: {
+      access_token: localStorage.getItem('access_token'),
+      ...query.params
+    }, // 请求参数
     responseType: query.responseType || 'json',
     auth: query.auth || { username: localStorage.getItem('access_token') },
     data: query.data || ''

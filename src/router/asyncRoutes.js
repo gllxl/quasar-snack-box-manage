@@ -48,6 +48,17 @@ const asyncRoutesChildren = [
     component: () => import('pages/noticeManage/noticeManage')
   },
   {
+    path: '/orderManage',
+    name: 'orderManage',
+    meta: {
+      roles: ['admin', 'editor', 'test'],
+      title: '订单管理',
+      icon: 'list_alt',
+      keepAlive: true
+    },
+    component: () => import('pages/orderManage/orderManage')
+  },
+  {
     path: '/recordManage',
     name: 'recordManage',
     meta: {

@@ -12,14 +12,14 @@ const axios = Axios.create({
   timeout: Vue.prototype.$timeOut
 })
 
-axios.defaults.withCredentials = true
+axios.defaults.withCredentials = false
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
-axios.defaults.headers.post['Accept-Encoding'] = 'Accept-Encoding: gzip, deflate'
+// axios.defaults.headers.post['Accept-Encoding'] = 'Accept-Encoding: gzip, deflate'
 
 if (process.env.DEV) {
   axios.defaults.baseURL = dbConfig.host
 } else if (process.env.PROD) {
-  axios.defaults.baseURL = 'http://localhost:10001/'
+  axios.defaults.baseURL = dbConfig.host
 }
 
 axios.interceptors.request.use(

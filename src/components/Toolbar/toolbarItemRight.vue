@@ -36,7 +36,7 @@
               <img :src="this.$PUBLIC_PATH + 'data/avatar.jpg'">
             </q-avatar>
 
-            <div class="text-subtitle1 q-mt-md q-mb-xs">Hi！ box</div>
+            <div class="text-subtitle1 q-mt-md q-mb-xs">Hi！{{$store.state.userInfo.nickname}}</div>
 
             <q-btn
               color="primary"
