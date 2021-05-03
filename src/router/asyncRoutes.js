@@ -70,6 +70,17 @@ const asyncRoutesChildren = [
     component: () => import('pages/replenishmentManage/replenishmentManage')
   },
   {
+    path: '/inventoryRecordManage',
+    name: 'InventoryRecordManage',
+    meta: {
+      roles: ['admin', 'editor', 'test'],
+      title: '盘货管理',
+      icon: 'list_alt',
+      keepAlive: true
+    },
+    component: () => import('pages/inventoryRecordManage/inventoryRecordManage')
+  },
+  {
     path: '/recordManage',
     name: 'recordManage',
     meta: {
