@@ -42,7 +42,7 @@ const asyncRoutesChildren = [
     meta: {
       roles: ['admin', 'editor', 'test'],
       title: '公告管理',
-      icon: 'list_alt',
+      icon: 'featured_play_list',
       keepAlive: true
     },
     component: () => import('pages/noticeManage/noticeManage')
@@ -64,7 +64,7 @@ const asyncRoutesChildren = [
     meta: {
       roles: ['admin', 'editor', 'test'],
       title: '补货管理',
-      icon: 'list_alt',
+      icon: 'playlist_add',
       keepAlive: true
     },
     component: () => import('pages/replenishmentManage/replenishmentManage')
@@ -75,7 +75,7 @@ const asyncRoutesChildren = [
     meta: {
       roles: ['admin', 'editor', 'test'],
       title: '盘货管理',
-      icon: 'list_alt',
+      icon: 'playlist_add_check',
       keepAlive: true
     },
     component: () => import('pages/inventoryRecordManage/inventoryRecordManage')
@@ -86,7 +86,7 @@ const asyncRoutesChildren = [
     meta: {
       roles: ['admin', 'editor', 'test'],
       title: '操作日志',
-      icon: 'list_alt',
+      icon: 'date_range',
       keepAlive: true
     },
     component: () => import('pages/recordManage/recordManage')
