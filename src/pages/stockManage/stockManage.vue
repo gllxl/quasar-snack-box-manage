@@ -158,8 +158,8 @@ export default {
         params: {}
       }
       this.$fetchData(query).then(res => {
-        this.allItem = res.data.AllItemInfo
-        console.log(this.allItem)
+        console.log(res.data)
+        this.allItem = res.data.data.info
       }).catch(error => {
         console.log(error)
       })

@@ -148,7 +148,10 @@ export default {
           sortable: true
         }
       ],
-      allBox: []
+      allBox: [],
+      dialogStatus: {
+        detail: true
+      }
     }
   },
   created () {
@@ -190,20 +193,10 @@ export default {
       })
     },
 
-    getHistoryDetail () {
-      const query = {
-        url: '/opeartionRecord/getOpeartionRecordDetail',
-        responseType: 'text',
-        params: {
-          operationRecordSerial: '6ea394c642de40639ef7e75c23cc25da'
-        }
-      }
-      this.$fetchData(query).then(res => {
-        console.log(res.data)
-      }).catch(error => {
-        console.log(error)
-      })
+    getShopDetailItem (e) {
+      console.log(e)
     },
+
     exportTable () {
       // naive encoding to csv format
       const content = [this.columns.map(col => wrapCsvValue(col.label))].concat(
