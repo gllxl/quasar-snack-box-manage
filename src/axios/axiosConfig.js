@@ -44,6 +44,15 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
   response => {
+    if (response.data.code !== 200) {
+      console.log(response)
+      Notify.create({
+        color: 'red',
+        position: 'top',
+        caption: response.config.url,
+        message: `服务器错误，错误信息：${response?.data?.msg ?? '未知'}`
+      })
+    }
     return response
   },
   error => {

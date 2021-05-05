@@ -9,8 +9,6 @@ import Vue from 'vue'
  */
 
 const fetchData = query => {
-  console.log(Vue.prototype)
-  console.log(Vue.prototype.$store)
   return _axios({
     url: query.url,
     method: query.method || 'POST',
