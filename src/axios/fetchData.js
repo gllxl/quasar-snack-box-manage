@@ -13,11 +13,11 @@ const fetchData = query => {
     url: query.url,
     method: query.method || 'POST',
     params: {
-      access_token: localStorage.getItem('access_token'),
+      access_token: sessionStorage.getItem('access_token'),
       ...query.params
     }, // 请求参数
     responseType: query.responseType || 'json',
-    auth: query.auth || { username: localStorage.getItem('access_token') },
+    auth: query.auth || { username: sessionStorage.getItem('access_token') },
     data: query.data || ''
   })
 }
