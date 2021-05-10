@@ -1,4 +1,5 @@
 import _axios from './axiosConfig'
+import Axios from 'axios'
 import Vue from 'vue'
 
 /**
@@ -18,8 +19,22 @@ const fetchData = query => {
     }, // 请求参数
     responseType: query.responseType || 'json',
     auth: query.auth || { username: sessionStorage.getItem('access_token') },
-    data: query.data || ''
+    data: query.data || '',
+    headers: query.headers
+  })
+}
+
+const fetchFile = query => {
+  const formData = new FormData()
+  formData.append('smfile', query.file)
+
+  return Axios({
+    url: query.url,
+    method: 'post',
+    data: formData,
+    headers: query.headers
   })
 }
 
 Vue.prototype.$fetchData = fetchData
+Vue.prototype.$fetchFile = fetchFile
